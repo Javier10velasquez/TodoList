@@ -1,28 +1,63 @@
 import React from "react";
+import { useState } from 'react'
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
-const Home = () => {
-	return (
-		<div className="text-center">
-            
+function Home() {
+  const [tarea, setTarea] = useState("");
+  const [lista, setLista] = useState([]);
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
-};
+  return (
+    <section   style={{
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  	}} >
+      <input
+        type="text"
+        placeholder="Pon tu tarea"
+        value={tarea}
+        onChange={(e) => setTarea(e.target.value)}
+      />
+
+	  <br></br>
+
+      <button
+        onClick={() => {
+          if (tarea === "") alert("mete una tarea vago"); 
+          setLista([...lista, tarea]);
+          setTarea("");
+        }}
+      >
+        Agregar
+      </button>
+
+	    <br></br>
+
+      <ul>
+		
+        {lista.map((item, index) => (
+          <li key={index} style={{ marginBottom: "10px" }}>
+            {item}
+            
+            <button
+              onClick={() => {
+                
+                setLista(lista.filter((_, i) => i !== index));
+              }}
+            >
+              ❌
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 
 export default Home;
